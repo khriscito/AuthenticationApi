@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			backendUrl: process.env.BACKEND_URL,
-			token: localStorage.getItem("token") || "",
+			token: localStorage.getItem("token") || null,
 			demo: [
 				{
 					title: "FIRST",

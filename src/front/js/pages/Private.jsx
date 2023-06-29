@@ -19,13 +19,13 @@ console.log(store.token)
 
   return (
 <div>
-      {store.token ? (
+      {!store.token ? (
         <>
         <p>Solo puedes ingresar si has iniciado sesión previamente</p>
           <button
             className="btn btn-danger"
             type="button"
-            onClick={() => history.push("/login")}
+            onClick={() => navigate("/login")}
           >
             Regresar a registro
           </button>
