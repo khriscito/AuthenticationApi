@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			backendUrl: process.env.BACKEND_URL,
+			token: localStorage.getItem("token") || "",
 			demo: [
 				{
 					title: "FIRST",
@@ -20,6 +22,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			registerUser: async (user) => {
+				const store = getStore();
+				const response = await fetch(store.backendUrl + "/api/register", {
+				  method: "POST",
+				  headers: { "Content-type": "application/json" },
+				  body: JSON.stringify({
+					email: user.email,
+					password: user.password,
+				  }),
+				});
+				const mensaje = await response.json();
+				console.log(mensaje);
+				return true;
+			  },
+
+			  login: async (user) => {
+				const store = getStore();
+				const response = await fetch(store.backendUrl + "/api/login", {
+				  method: "POST",
+				  headers: { "Content-type": "application/json" },
+				  body: JSON.stringify({ email: user.email, password: user.password }),
+				});
+				const mensaje = await response.json();
+				console.log(mensaje);
+				setStore({ ...store, token: mensaje.token });
+				localStorage.setItem("token", mensaje.token);
+				return true;
+			  },
 
 			getMessage: async () => {
 				try{
